@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Labour Mistri Connect - কোম্পানি ড্যাশবোর্ড</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+header{background:linear-gradient(135deg,#075985,#0f766e);color:#fff;padding:22px 15px;text-align:center}
+header h1{margin:0 0 7px;font-size:25px}header p{margin:0;opacity:.92}
+.wrap{max-width:1150px;margin:auto;padding:15px}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:15px 0}
+.card,.box{background:#fff;border-radius:15px;padding:17px;box-shadow:0 4px 15px #0001}.card h3{margin:0;color:#667085;font-size:14px}.num{font-size:30px;font-weight:bold;color:#075985;margin-top:7px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+h2{font-size:19px;margin:0 0 13px}input,select,textarea,button{width:100%;padding:11px;margin:5px 0;border:1px solid #d0d5dd;border-radius:9px;font-size:15px}textarea{min-height:75px}
+button{border:0;background:#0f766e;color:#fff;font-weight:bold;cursor:pointer}.secondary{background:#075985}.danger{background:#dc2626}.warning{background:#b45309}
+.tabs{display:flex;gap:8px;overflow:auto;margin-bottom:14px}.tabs button{min-width:120px}.active{outline:3px solid #99f6e4}
+.badge{display:inline-block;padding:4px 8px;border-radius:20px;background:#ecfdf5;color:#047857;font-size:12px}.verified{background:#dbeafe;color:#1d4ed8}
+table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:9px;border-bottom:1px solid #eee;text-align:left;font-size:14px}th{background:#f8fafc}
+.bar{height:11px;background:#e5e7eb;border-radius:9px;overflow:hidden;margin:5px 0 12px}.fill{height:100%;background:#0f766e}
+.notice{padding:11px;background:#eff6ff;border-radius:10px;margin:8px 0;color:#1e40af}.small{font-size:12px;color:#667085}
+.hidden{display:none}.search{margin-bottom:10px}.stars{color:#d97706}.actions button{display:inline-block;width:auto;padding:7px 10px;margin-right:4px}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}table{font-size:12px;display:block;overflow:auto}}
+</style>
+</head>
+<body>
+<header>
+<h1>🔨 Labour Mistri Connect</h1>
+<p>লেবার • মিস্ত্রী • ঠিকাদার • কাজ • ভেরিফিকেশন • কোম্পানি ড্যাশবোর্ড</p>
+</header>
+
+<div class="wrap">
+<div class="cards">
+<div class="card"><h3>মোট মিস্ত্রী/লেবার</h3><div class="num" id="totalWorkers">0</div></div>
+<div class="card"><h3>কাজ চাই</h3><div class="num" id="jobSeekers">0</div></div>
+<div class="card"><h3>মোট ঠিকাদার</h3><div class="num" id="totalContractors">0</div></div>
+<div class="card"><h3>লেবার দরকার</h3><div class="num" id="labourNeeded">0</div></div>
+<div class="card"><h3>ভেরিফায়েড</h3><div class="num" id="verified">0</div></div>
+</div>
+
+<div class="tabs">
+<button class="active" onclick="showTab('register',this)">➕ রেজিস্ট্রেশন</button>
+<button onclick="showTab('search',this)">🔎 খুঁজুন</button>
+<button onclick="showTab('admin',this)">🛡️ কোম্পানি Admin</button>
+</div>
+
+<section id="register">
+<div class="grid">
+<div class="box">
+<h2>👷 লেবার / মিস্ত্রী</h2>
+<form id="workerForm">
+<input id="wName" placeholder="নাম" required>
+<input id="wMobile" placeholder="মোবাইল নম্বর" inputmode="numeric" required>
+<select id="wType" required><option value="">কাজ নির্বাচন করুন</option></select>
+<div class="row"><input id="wExp" type="number" min="0" placeholder="অভিজ্ঞতা (বছর)"><input id="wRate" type="number" min="0" placeholder="দৈনিক রেট ₹"></div>
+<select id="wStatus"><option value="yes">কাজ চাই</option><option value="no">কাজ চাই না</option></select>
+<input id="wArea" placeholder="এলাকা">
+<button type="submit">রেজিস্টার + WhatsApp</button>
+</form>
+</div>
+
+<div class="box">
+<h2>🏗️ ঠিকাদার</h2>
+<form id="contractorForm">
+<input id="cName" placeholder="ঠিকাদারের নাম" required>
+<input id="cMobile" placeholder="মোবাইল নম্বর" inputmode="numeric" required>
+<input id="cArea" placeholder="কাজের এলাকা">
+<select id="cType" required><option value="">কোন মিস্ত্রী/লেবার দরকার?</option></select>
+<div class="row"><input id="cNeed" type="number" min="1" placeholder="কত জন দরকার?" required><input id="cRate" type="number" min="0" placeholder="প্রস্তাবিত রেট ₹"></div>
+<textarea id="cDetails" placeholder="কাজের বিস্তারিত"></textarea>
+<button type="submit">কাজের চাহিদা পাঠান + WhatsApp</button>
+</form>
+</div>
+</div>
+
+<div class="box">
+<h2>🛡️ ভরসার ব্যবস্থা</h2>
+<div class="notice">🔒 গোপনীয়তা: লেবার/মিস্ত্রী/ঠিকাদারের ব্যক্তিগত মোবাইল নম্বর অন্য ব্যবহারকারী দেখতে পারবেন না। সব আবেদন প্রথমে কোম্পানি Admin-এর কাছে যাবে। কোম্পানি অনুমতি দিলে তবেই যোগাযোগের তথ্য শেয়ার করা হবে।</div>
+<div class="row">
+<div><b>মিস্ত্রীর সুবিধা</b><p>কাজের সুযোগ • নিজের দক্ষতা দেখানো • রেট দেওয়া • ঠিকাদারের চাহিদা দেখা</p></div>
+<div><b>ঠিকাদারের সুবিধা</b><p>দক্ষ লোক খোঁজা • কতজন দরকার জানানো • এলাকা অনুযায়ী খোঁজা • যোগাযোগ</p></div>
+</div>
+</div>
+</section>
+
+<section id="search" class="hidden">
+<div class="box">
+<h2>🔎 মিস্ত্রী / লেবার খুঁজুন</h2>
+<div class="row">
+<input id="q" class="search" placeholder="নাম / এলাকা লিখুন">
+<select id="filterSkill"><option value="">সব কাজ</option></select>
+</div>
+<div id="workerResults"></div>
+</div>
+<div class="box"><h2>🏗️ বর্তমান কাজের চাহিদা</h2><div id="jobResults"></div></div>
+</section>
+
+<section id="admin" class="hidden">
+<div class="box">
+<h2>🛡️ কোম্পানি Admin Dashboard</h2>
+<p class="small">🔐 Admin-ই ব্যক্তিগত মোবাইল নম্বর দেখতে পারবেন। বাস্তব অনলাইন নিরাপত্তার জন্য PHP + MySQL + Secure Login/OTP সার্ভার দরকার; শুধু HTML-এ 100% গোপনীয়তা নিশ্চিত করা যায় না।</p>
+<div class="row">
+<button class="secondary" onclick="exportData()">📥 ডেটা Export</button>
+<button class="warning" onclick="demoVerify()">✅ প্রথম মিস্ত্রীকে Demo Verified</button>
+</div>
+</div>
+<div class="box"><h2>📊 কাজ অনুযায়ী রিপোর্ট</h2><div id="skillStats"></div></div>
+<div class="box"><h2>📋 সাম্প্রতিক রেজিস্ট্রেশন</h2>
+<table><thead><tr><th>ধরন</th><th>নাম</th><th>কাজ</th><th>রেট/চাহিদা</th><th>এলাকা</th><th>স্ট্যাটাস</th></tr></thead>
+<tbody id="recent"></tbody></table>
+</div>
+<div class="box"><button class="danger" onclick="clearData()">সব ডেটা মুছে দিন</button></div>
+</section>
+</div>
+
+<script>
+const WHATSAPP='918509456584';
+const skills=["Tiles Mistri","Marble Mistri","Granite Mistri","Flooring Mistri","Painter / পেন্টার","Mason / রাজমিস্ত্রী","Plumber / প্লাম্বার","Electrician / ইলেকট্রিশিয়ান","Carpenter / কাঠমিস্ত্রী","Welder / ওয়েল্ডার","POP Worker / POP মিস্ত্রী","Aluminium Worker / অ্যালুমিনিয়াম মিস্ত্রী","Glass Worker / গ্লাস মিস্ত্রী","Fabricator / ফ্যাব্রিকেটর","Brick Worker / ইটের মিস্ত্রী","Shuttering Carpenter / শাটারিং মিস্ত্রী","Roofing Worker / ছাদ মিস্ত্রী","Waterproofing / ওয়াটারপ্রুফিং","False Ceiling / ফলস সিলিং","Gypsum Worker / জিপসাম মিস্ত্রী","Painting Helper / পেন্টিং হেল্পার","Construction Helper / নির্মাণ লেবার","Plaster Worker / প্লাস্টার মিস্ত্রী","Putty Worker / পুটি মিস্ত্রী","Wall Cladding / ওয়াল ক্ল্যাডিং","Stone Worker / পাথরের মিস্ত্রী","Kitchen Fitter / কিচেন ফিটার","Modular Furniture / মডুলার ফার্নিচার","UPVC Worker / UPVC মিস্ত্রী","Door Fitter / দরজা ফিটার","Window Fitter / জানালা ফিটার","AC Technician / AC টেকনিশিয়ান","Solar Technician / সোলার টেকনিশিয়ান","CCTV Technician / CCTV টেকনিশিয়ান","Pump Operator / পাম্প অপারেটর","Machine Operator / মেশিন অপারেটর","Gardener / বাগানের কাজ","Cleaning Worker / পরিষ্কার কর্মী","General Labour / সাধারণ লেবার","Other / অন্যান্য"];
+
+let workers=JSON.parse(localStorage.getItem("lc_workers")||"[]");
+let contractors=JSON.parse(localStorage.getItem("lc_contractors")||"[]");
+
+function fill(){
+ let a=document.getElementById("wType"),b=document.getElementById("cType"),f=document.getElementById("filterSkill");
+ skills.forEach(s=>{a.add(new Option(s,s));b.add(new Option(s,s));f.add(new Option(s,s))});
+}
+fill();
+
+function save(){localStorage.setItem("lc_workers",JSON.stringify(workers));localStorage.setItem("lc_contractors",JSON.stringify(contractors));render();}
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function render(){
+ totalWorkers.textContent=workers.length;jobSeekers.textContent=workers.filter(x=>x.status==="yes").length;
+ totalContractors.textContent=contractors.length;labourNeeded.textContent=contractors.reduce((a,x)=>a+Number(x.need||0),0);
+ verified.textContent=workers.filter(x=>x.verified).length;
+ let max=Math.max(1,...skills.map(s=>workers.filter(x=>x.type===s).length));
+ skillStats.innerHTML=skills.map(s=>{let w=workers.filter(x=>x.type===s).length,n=contractors.filter(x=>x.type===s).reduce((a,x)=>a+Number(x.need||0),0);return `<div><b>${esc(s)}</b> — মিস্ত্রী ${w} জন | দরকার ${n} জন<div class="bar"><div class="fill" style="width:${w/max*100}%"></div></div></div>`}).join("");
+ let rows=[];
+ workers.slice(-10).reverse().forEach(x=>rows.push(`<tr><td>লেবার</td><td>${esc(x.name)}</td><td>${esc(x.type)}</td><td>₹${x.rate||0}/দিন</td><td>${esc(x.area)}</td><td>${x.verified?'<span class="badge verified">Verified</span>':'Pending'}</td></tr>`));
+ contractors.slice(-10).reverse().forEach(x=>rows.push(`<tr><td>ঠিকাদার</td><td>${esc(x.name)}</td><td>${esc(x.type)}</td><td>${x.need} জন / ₹${x.rate||0}</td><td>${esc(x.area)}</td><td><span class="badge">চাহিদা</span></td></tr>`));
+ recent.innerHTML=rows.join("")||'<tr><td colspan="6">কোনো রেজিস্ট্রেশন নেই</td></tr>';
+ searchWorkers();searchJobs();
+}
+function showTab(id,btn){document.querySelectorAll("section").forEach(x=>x.classList.add("hidden"));document.getElementById(id).classList.remove("hidden");document.querySelectorAll(".tabs button").forEach(x=>x.classList.remove("active"));btn.classList.add("active");}
+function wa(msg){window.open("https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(msg),"_blank");}
+
+workerForm.onsubmit=e=>{e.preventDefault();let x={name:wName.value,mobile:wMobile.value,type:wType.value,exp:wExp.value,rate:wRate.value,status:wStatus.value,area:wArea.value,verified:false,date:new Date().toISOString()};workers.push(x);save();wa(`নতুন লেবার/মিস্ত্রী রেজিস্ট্রেশন\nনাম: ${x.name}\nমোবাইল: ${x.mobile}\nকাজ: ${x.type}\nঅভিজ্ঞতা: ${x.exp} বছর\nরেট: ₹${x.rate}/দিন\nএলাকা: ${x.area}`);e.target.reset();alert("রেজিস্ট্রেশন হয়েছে।");};
+contractorForm.onsubmit=e=>{e.preventDefault();let x={name:cName.value,mobile:cMobile.value,area:cArea.value,type:cType.value,need:cNeed.value,rate:cRate.value,details:cDetails.value,date:new Date().toISOString()};contractors.push(x);save();wa(`নতুন ঠিকাদার কাজের চাহিদা\nনাম: ${x.name}\nমোবাইল: ${x.mobile}\nএলাকা: ${x.area}\nদরকার: ${x.type}\nকত জন: ${x.need}\nরেট: ₹${x.rate}\nবিস্তারিত: ${x.details}`);e.target.reset();alert("কাজের চাহিদা জমা হয়েছে।");};
+
+function searchWorkers(){
+ let q=(document.getElementById("q")?.value||"").toLowerCase(), s=document.getElementById("filterSkill")?.value||"";
+ let a=workers.filter(x=>(!q||(x.name+" "+x.area+" "+x.type).toLowerCase().includes(q))&&(!s||x.type===s)&&x.status==="yes");
+ workerResults.innerHTML=a.length?a.map(x=>`<div class="box"><b>${esc(x.name)}</b> ${x.verified?'<span class="badge verified">✓ Verified</span>':''}<br>${esc(x.type)} • ${esc(x.area)}<br>অভিজ্ঞতা: ${x.exp||0} বছর • রেট: ₹${x.rate||0}/দিন • <span class="stars">★★★★★</span><br><div class="actions"><button onclick="call('${esc(x.mobile)}')">📞 ফোন</button><button onclick="msg('${esc(x.mobile)}')">💬 WhatsApp</button></div></div>`).join(""):"কোনো মিস্ত্রী পাওয়া যায়নি।";
+}
+function searchJobs(){jobResults.innerHTML=contractors.slice().reverse().map(x=>`<div class="notice"><b>${esc(x.type)}</b> — ${x.need} জন দরকার<br>এলাকা: ${esc(x.area)} • রেট: ₹${x.rate||0}<br>${esc(x.details||"")}</div>`).join("")||"কোনো কাজের চাহিদা নেই।";}
+q.oninput=searchWorkers;filterSkill.onchange=searchWorkers;
+function requestContact(name,type){ wa(`যোগাযোগের অনুরোধ\nমিস্ত্রী: ${name}\nকাজ: ${type}\nঅনুরোধকারী কোম্পানি Admin-এর মাধ্যমে যোগাযোগ করতে চান।`); alert("অনুরোধটি কোম্পানি Admin-এর WhatsApp-এ পাঠানো হয়েছে।"); }
+function demoVerify(){if(workers[0]){workers[0].verified=true;save();alert("Demo Verified করা হয়েছে।");}else alert("আগে একজন মিস্ত্রী রেজিস্টার করুন।");}
+function exportData(){let data=JSON.stringify({workers,contractors},null,2),a=document.createElement("a");a.href=URL.createObjectURL(new Blob([data],{type:"application/json"}));a.download="labour-mistri-company-data.json";a.click();}
+function clearData(){if(confirm("সব ডেটা মুছে ফেলবেন?")){workers=[];contractors=[];save();}}
+render();
+</script>
+</body>
+</html>
